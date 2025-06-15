@@ -2,7 +2,7 @@
 
 ---
 
-```markdown
+markdown
 # 🍽️ Restaurant Booking Web Application
 
 This is a full-stack **Restaurant Booking** web application built using the **MERN stack** (MongoDB, Express, React, Node.js). The app allows customers to browse the menu, book tables online, and admins to manage reservations and restaurant information efficiently.
