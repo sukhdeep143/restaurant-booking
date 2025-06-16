@@ -1,14 +1,19 @@
+import React from 'react';
 
-import './App.css'
+import Footer from './components/Footer';
+import Header from './components/Header ';
 
 function App() {
-
-
   return (
-    <div className='bg-red-400'>
-     Booking app
-    </div>
-  )
+    <>
+      <Header />
+      <div style={{ minHeight: '90vh', padding: '20px' }}>
+        {/* Main Content Goes Here */}
+        <p>Restaurant Website with Booking site!</p>
+      </div>
+      <Footer />
+    </>
+  );
 }
 
-export default App
+export default App;
