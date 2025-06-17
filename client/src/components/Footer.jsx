@@ -1,11 +1,10 @@
+// src/components/Footer.jsx
 import React from 'react';
 
-function Footer() {
+export default function Footer() {
   return (
-    <footer style={{ padding: '10px 20px', backgroundColor: '#333', color: 'white', position: 'fixed', bottom: 0, width: '100%' }}>
-      <p>&copy; 2025 Restaurant Website with Booking. All rights reserved.</p>
+    <footer className="bg-gray-200 p-4 text-center text-sm">
+      © 2025 EasyDine. All rights reserved.
     </footer>
   );
 }
-
-export default Footer;
