@@ -1,18 +1,24 @@
-import React from 'react';
+import React from "react";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 
-import Footer from './components/Footer';
-import Header from './components/Header ';
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
+import Home from "./pages/Home";
+import Footer from "./components/Footer";
+import Header from "./components/Header ";
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <Header />
-      <div style={{ minHeight: '90vh', padding: '20px' }}>
-        {/* Main Content Goes Here */}
-        <p>Restaurant Website with Booking site!</p>
-      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+     
+      </Routes>
       <Footer />
-    </>
+    </BrowserRouter>
   );
 }
 
