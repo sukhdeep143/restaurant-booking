@@ -1,22 +1,25 @@
 /* App.css */
-
+/* ======= GLOBAL ======= */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
   background-color: #fff;
   color: #333;
+  overflow-x: hidden;
 }
 
+/* ======= HEADER ======= */
 header {
-  position: absolute; /* make header float over image */
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 10; /* ensures it’s above the image */
+  z-index: 10;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  background: rgba(0, 0, 0, 0.8); /* slight transparency */
+  background: rgba(0, 0, 0, 0.8);
   color: white;
   padding: 15px 30px;
   box-sizing: border-box;
@@ -28,11 +31,21 @@ header .logo {
   font-size: 1.4rem;
 }
 
+header nav {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 header nav a {
   margin: 0 10px;
   text-decoration: none;
   color: white;
   font-size: 0.9rem;
+}
+
+header .auth-buttons {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 header .auth-buttons button {
@@ -49,7 +62,7 @@ header .auth-buttons button:hover {
   color: black;
 }
 
-
+/* ======= HERO SECTION ======= */
 .hero {
   display: flex;
   width: 100%;
@@ -62,18 +75,13 @@ header .auth-buttons button:hover {
   height: 500px;
   object-fit: cover;
   display: block;
-  margin: 0;
-  padding: 0;
-  border: none;
-  box-shadow: none;
-
 }
 
-
+/* === TEXT OVER IMAGE === */
 .hero-text {
   position: absolute;
   top: 20%;
-  left: 50px; /* Reduced from 150px for better centering on wider screens */
+  left: 50px;
   background: rgba(0, 0, 0, 0.6);
   color: white;
   padding: 25px;
@@ -94,6 +102,7 @@ header .auth-buttons button:hover {
   margin-bottom: 10px;
 }
 
+/* ======= FOOTER ======= */
 footer {
   background: #111;
   color: white;
@@ -137,3 +146,58 @@ footer {
   font-size: 0.75rem;
   color: #aaa;
 }
+
+/* ======= 📱 MOBILE RESPONSIVENESS ======= */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 20px;
+  }
+
+  header nav {
+    margin-top: 10px;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  header nav a {
+    margin: 5px 0;
+  }
+
+  header .auth-buttons {
+    margin-top: 10px;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .hero-text {
+    left: 20px;
+    right: 20px;
+    top: 30%;
+    padding: 15px;
+    max-width: 90%;
+  }
+
+  .hero-text h2 {
+    font-size: 24px;
+  }
+
+  .hero-text p {
+    font-size: 16px;
+  }
+
+  .hero img {
+    height: 300px;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  footer {
+    padding: 15px;
+  }
+}
+
