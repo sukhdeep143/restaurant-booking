@@ -3,9 +3,16 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
+import ForgotPassword from "./pages/ForgetPassword";
 import Home from "./pages/Home";
+import VerifyEmailPage from "./pages/VerifyEmail";
 import Footer from "./components/Footer";
 import Header from "./components/Header ";
+
+
+const token = localStorage.getItem('token');
+const userId = localStorage.getItem('userId');
+
 
 function App() {
   return (
@@ -15,7 +22,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
-     
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/verify-email" element={<VerifyEmailPage />} />
+        
       </Routes>
       <Footer />
     </BrowserRouter>
