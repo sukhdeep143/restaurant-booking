@@ -1,1 +1,139 @@
-@import "tailwindcss";
+/* App.css */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff;
+  color: #333;
+}
+
+header {
+  position: absolute; /* make header float over image */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10; /* ensures it’s above the image */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8); /* slight transparency */
+  color: white;
+  padding: 15px 30px;
+  box-sizing: border-box;
+}
+
+header .logo {
+  color: orange;
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+header nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: white;
+  font-size: 0.9rem;
+}
+
+header .auth-buttons button {
+  margin-left: 10px;
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  cursor: pointer;
+}
+
+header .auth-buttons button:hover {
+  background: white;
+  color: black;
+}
+
+
+.hero {
+  display: flex;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+
+}
+
+
+.hero-text {
+  position: absolute;
+  top: 20%;
+  left: 50px; /* Reduced from 150px for better centering on wider screens */
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 25px;
+  max-width: 500px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.hero-text h2 {
+  margin-bottom: 12px;
+  font-size: 32px;
+  line-height: 1.3;
+}
+
+.hero-text p {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+footer {
+  background: #111;
+  color: white;
+  padding: 20px 30px;
+  font-size: 0.85rem;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-info,
+.footer-links,
+.footer-social {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer-links a,
+.footer-social a {
+  display: block;
+  margin: 5px 0;
+  color: white;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.footer-links a:hover,
+.footer-social a:hover {
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  border-top: 1px solid #444;
+  padding-top: 10px;
+  font-size: 0.75rem;
+  color: #aaa;
+}
