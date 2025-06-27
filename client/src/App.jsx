@@ -51,7 +51,9 @@ export default App;
 
 // function App() {
 //   return (
+
 //     <AuthProvider>
+
 
 //     <Router>
 //         <Routes>
@@ -61,6 +63,7 @@ export default App;
 //           <Route path="/forgot-password" element={<ForgotPassword />} />
 //           <Route path="/verify-email" element={<VerifyEmailPage />} />
 //           <Route
+
 //             path="/admin/dashboard"
 //             element={
 //               <ProtectRoute requiredRole="admin">
@@ -79,6 +82,7 @@ export default App;
 //           </Routes>
 //     </Router>
 //   </AuthProvider>
+
 //       );
 
 //     }
