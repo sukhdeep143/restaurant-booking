@@ -9,7 +9,7 @@ import Home from "./pages/Home";
 import VerifyEmailPage from "./pages/VerifyEmail";
 import Footer from "./components/Footer";
 import Header from "./components/Header ";
-
+import AdminPanel from "./components/ui/admin-panel";
 
 const token = localStorage.getItem('token');
 // console.log(token);
@@ -32,7 +32,8 @@ function App() {
         
       </Routes>
       <Footer />
-    </BrowserRouter>
+    </BrowserRouter>,
+    <div><AdminPanel /></div>
   );
 }
 
