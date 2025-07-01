@@ -28,12 +28,14 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
+        <Route path="/Admin" element={<AdminPanel />} />
+
         
         
       </Routes>
       <Footer />
-    </BrowserRouter>,
-    <div><AdminPanel /></div>
+    </BrowserRouter>
+  
   );
 }
 

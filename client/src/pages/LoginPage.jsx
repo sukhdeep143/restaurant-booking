@@ -21,7 +21,7 @@ const LoginForm = () => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('userId', response.data.userId);
         toast.success('Login successful');
-        navigate('/');
+        navigate('/Admin');
       }
     } catch (error) {
       toast.error(error.response?.data?.message || 'Login failed');
