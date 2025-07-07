@@ -3,25 +3,22 @@ import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate, Link } from 'react-router-dom';
-import { Database, Lock, Mail, Eye, EyeOff, Shield, ArrowRight } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff, Shield, ArrowRight } from 'lucide-react';
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = React.useState(false);
-  
-  const PORT=import.meta.env.VITE_APP_API_URL 
+  const PORT = import.meta.env.VITE_APP_API_URL;
 
-
-  // Your exact original logic - unchanged
   const handleLogin = async (values, { setSubmitting }) => {
     try {
       const response = await axios.post(`${PORT}/api/auth/login`, values);
-      
+
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('userId', response.data.userId);
         toast.success('Login successful');
-        navigate('/');
+        navigate('/profile');
       }
     } catch (error) {
       toast.error(error.response?.data?.message || 'Login failed');
@@ -31,37 +28,36 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden w-full" style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', maxWidth: 'none' }}>
+    <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative">
+      
       {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden -z-10">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-indigo-400/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-indigo-400/10 to-blue-400/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-indigo-400/10 to-blue-400/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
 
       {/* Header Section */}
-      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center mb-6">
-          {/* <div className="bg-gradient-to-br from-blue-600 to-indigo-600 w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform duration-300">
-            <Database className="h-8 w-8 text-white" />
-          </div> */}
+          {/* Optional icon or logo here */}
         </div>
         <h2 className="text-center text-4xl font-extrabold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-2">
           Welcome Back
         </h2>
         <p className="text-center text-lg text-gray-600 mb-2">
-          Sign in to Website
+          Sign in to Developer Restaurant
         </p>
         <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
           <Shield className="w-4 h-4" />
-          <span>Restaurent Management System</span>
+          <span>Restaurant Management System</span>
         </div>
       </div>
 
       {/* Login Form */}
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-        <div className="bg-white/80 backdrop-blur-xl py-10 px-10 shadow-2xl rounded-2xl border border-white/20 relative overflow-hidden">
-          {/* Subtle gradient overlay */}
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white/80 backdrop-blur-xl py-10 px-8 shadow-2xl rounded-2xl border border-white/20 relative overflow-hidden">
+          
           <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent pointer-events-none"></div>
           
           <div className="relative">
@@ -74,6 +70,7 @@ const LoginForm = () => {
             >
               {({ isSubmitting }) => (
                 <Form className="space-y-6">
+                  
                   {/* Email Field */}
                   <div className="space-y-2">
                     <label className="block text-sm font-semibold text-gray-700">
@@ -162,20 +159,12 @@ const LoginForm = () => {
             </Formik>
           </div>
         </div>
-
-        {/* Security Badge */}
-        {/* <div className="mt-6 text-center">
-          <div className="inline-flex items-center px-4 py-2 bg-green-100/80 backdrop-blur-sm text-green-800 rounded-full text-sm font-medium border border-green-200">
-            <Shield className="w-4 h-4 mr-2" />
-            Protected by enterprise-grade security
-          </div>
-        </div> */}
       </div>
 
       {/* Bottom Decoration */}
-      <div className="mt-8 text-center relative z-10">
+      <div className="mt-8 text-center">
         <div className="flex items-center justify-center space-x-4 text-xs text-gray-500">
-          <span>© 2025 RMS</span>
+          <span>© 2025 Developer Restaurant</span>
           <span>•</span>
           <a href="#" className="hover:text-gray-700 transition-colors duration-200">Privacy</a>
           <span>•</span>
