@@ -1,20 +1,44 @@
-// src/components/Header.jsx
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { FaHamburger } from 'react-icons/fa';
 
 export default function Header() {
-  const navigate = useNavigate();
-
   return (
-    <header className="bg-white shadow p-4 text-center text-xl font-semibold">
-      🍽️ EasyDine – Your Restaurant Booking Buddy
-      <div className="mt-2">
-        <button
-          onClick={() => navigate("/userpanel")} // ✅ lowercase
-          className="px-4 py-2 bg-blue-500 text-white rounded"
-        >
-          Go to User Panel
-        </button>
+    <header className="bg-gray-100 dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700 shadow-sm">
+      <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+        
+        {/* Logo and Site Name */}
+        <div className="flex items-center space-x-2 text-xl font-bold text-gray-800 dark:text-white">
+          <FaHamburger className="text-yellow-500" />
+          <span>Developer Restaurant</span>
+        </div>
+        
+        {/* Navigation Links */}
+        <nav className="space-x-4 hidden md:flex">
+          <a
+            href="#home"
+            className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
+          >
+            Home
+          </a>
+          <a
+            href="#content"
+            className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
+          >
+            Content
+          </a>
+          <a
+            href="#about"
+            className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
+          >
+            About
+          </a>
+          <a
+            href="#contact"
+            className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
+          >
+            Contact
+          </a>
+        </nav>
       </div>
     </header>
   );
