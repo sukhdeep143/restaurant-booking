@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import VerifyEmailPage from "./pages/VerifyEmail";
 import Footer from "./components/Footer";
 import Header from "./components/Header ";
+import AboutUsPage from './pages/AboutUsPage';
 
 
 const token = localStorage.getItem('token');
@@ -28,7 +29,7 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
-        
+        <Route path="/about-us" element={<AboutUsPage />} />
         
       </Routes>
       <Footer />
