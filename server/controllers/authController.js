@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const User = require('../models/UserModel');
 
+
 require("dotenv").config();
 // Store OTPs temporarily (in production, use Redis or a database)
 const otpStore = new Map();

@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const User = require('../models/UserModel');
+const RegisteredUser = require('../models/RegisteredUserModel');
 const fs = require('fs');
 require('dotenv').config();
 
@@ -99,6 +100,16 @@ const signup = async (req, res) => {
     newUser.emailVerificationToken = verificationCode;
     newUser.emailVerificationTokenExpires = tokenExpiration;
     await newUser.save();
+// Save registered user info
+const exists = await RegisteredUser.findOne({ email: newUser.email });
+if (!exists) {
+  await RegisteredUser.create({
+    idNumber: newUser._id.toString(),
+    name: `${newUser.firstName} ${newUser.lastName}`,
+    email: newUser.email,
+    mobileNumber: newUser.phoneNumber,
+  });
+}
 
     // Send verification email
     const mailOptions = {

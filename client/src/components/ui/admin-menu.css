@@ -1,0 +1,109 @@
+.admin-menu-container {
+  padding: 24px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.admin-menu-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.admin-menu-search {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 16px;
+}
+
+.admin-menu-search input {
+  padding: 8px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.admin-menu-form {
+  background-color: #f1f1f1;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-menu-form input,
+.admin-menu-form select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.admin-menu-form button {
+  padding: 10px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.admin-menu-form button:hover {
+  background-color: #1e40af;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 300px;
+}
+
+.admin-menu-subtitle {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.menu-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.menu-table th,
+.menu-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+.menu-table th {
+  background-color: #a1bee4;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  margin: 0 4px;
+}
+
+.edit-btn {
+  background-color: #f59e0b;
+}
+
+.delete-btn {
+  background-color: #dc2626;
+}
+
+.no-data-text {
+  color: #777;
+  margin-top: 10px;
+}
