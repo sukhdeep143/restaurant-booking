@@ -113,11 +113,24 @@ const SignupForm = () => {
                 </div>
               </SectionCard>
 
-              {/* === ROLES SECTION === */}
+              {/* === ROLES SECTION (Updated) === */}
               <SectionCard title="Roles" color="from-purple-50 to-pink-50" iconColor="from-purple-500 to-pink-500">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <InputField name="role" value={formData.role} onChange={handleChange} placeholder="Enter Your Role" />
-                  <InputField name="adminSecret" type="password" value={formData.adminSecret} onChange={handleChange} placeholder="Secret Key" />
+                  <SelectField
+                    name="role"
+                    value={formData.role}
+                    onChange={handleChange}
+                    options={["User", "Admin"]}
+                  />
+                  {formData.role === "Admin" && (
+                    <InputField
+                      name="adminSecret"
+                      type="password"
+                      value={formData.adminSecret}
+                      onChange={handleChange}
+                      placeholder="Secret Key"
+                    />
+                  )}
                 </div>
               </SectionCard>
 
@@ -132,7 +145,7 @@ const SignupForm = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="relative overflow-hidden px-10 py-4 text-lg font-semibold rounded-2xl text-white !bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 focus:outline-none focus:ring-4 focus:ring-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl order-1 sm:order-2"
+                  className="relative overflow-hidden px-10 py-4 text-lg font-semibold rounded-2xl text-white bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 focus:outline-none focus:ring-4 focus:ring-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl order-1 sm:order-2"
                 >
                   {isSubmitting ? 'Creating Account...' : 'Create Account'}
                 </button>

@@ -9,16 +9,8 @@ import Home from "./pages/Home";
 import VerifyEmailPage from "./pages/VerifyEmail";
 import Footer from "./components/Footer";
 import Header from "./components/Header ";
-import UserProfile from './components/UserProfile';
-import AdminPanel from "./pages/admin-panel";
-
-
-const token = localStorage.getItem('token');
-// console.log(token);
-
-const userId = localStorage.getItem('userId');
-// console.log(userId);
-
+import UserProfile from "./components/UserProfile";
+import AdminPanel from "./pages/Admin-panel";
 
 function App() {
   return (
@@ -30,10 +22,23 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
-        <Route path="/profile" element={<UserProfile />} />
-<Route path="/admin-panel" element={<AdminPanel />} />
         
-        
+        <Route
+          path="/profile"
+          element={
+            <ProtectRoute allowedRoles={['user']}>
+              <UserProfile />
+            </ProtectRoute>
+          }
+        />
+        <Route
+          path="/Admin"
+          element={
+            <ProtectRoute allowedRoles={['Admin']}>
+              <AdminPanel />
+            </ProtectRoute>
+          }
+        />
       </Routes>
       <Footer />
     </BrowserRouter>
@@ -41,56 +46,3 @@ function App() {
 }
 
 export default App;
-
-
-
-// import { Routes, Route, Router } from 'react-router-dom';
-
-// import ProtectRoute from './pages/ProtectRoute';
-// import LoginPage from './pages/LoginPage';
-// import SignUpPage from './pages/SignUpPage';
-// import ForgotPassword from './pages/ForgetPassword';
-// import Home from './pages/Home';
-// import VerifyEmailPage from './pages/VerifyEmail';
-// // import AdminDashboard from './pages/AdminDashboard';
-// // import UserProfile from './pages/UserProfile';
-
-
-// function App() {
-//   return (
-
-//     <AuthProvider>
-
-
-//     <Router>
-//         <Routes>
-//           <Route path="/" element={<Home />} />
-//           <Route path="/login" element={<LoginPage />} />
-//           <Route path="/signup" element={<SignUpPage />} />
-//           <Route path="/forgot-password" element={<ForgotPassword />} />
-//           <Route path="/verify-email" element={<VerifyEmailPage />} />
-//           <Route
-
-//             path="/admin/dashboard"
-//             element={
-//               <ProtectRoute requiredRole="admin">
-//                 <AdminDashboard />
-//               </ProtectRoute>
-//             }
-//             />
-//             <Route
-//               path="/user/profile"
-//               element={
-//                 <ProtectRoute requiredRole="user">
-//                   <UserProfile />
-//                 </ProtectRoute>
-//               }
-//             />
-//           </Routes>
-//     </Router>
-//   </AuthProvider>
-
-//       );
-
-//     }
-// export default App;

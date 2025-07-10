@@ -14,11 +14,18 @@ const LoginForm = () => {
     try {
       const response = await axios.post(`${PORT}/api/auth/login`, values);
 
-      if (response.data.token) {
+      if (response.data.token && response.data.role) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userId", response.data.userId);
+        localStorage.setItem("role", response.data.role);
         toast.success("Login successful");
-        navigate("/profile");
+
+        // ✅ Convert role to lowercase for comparison
+        if (response.data.role.toLowerCase() === "admin") {
+          navigate("/Admin");
+        } else {
+          navigate("/profile");
+        }
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
@@ -44,9 +51,7 @@ const LoginForm = () => {
 
       {/* Header Section */}
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex justify-center mb-6">
-          {/* Optional icon or logo here */}
-        </div>
+        <div className="flex justify-center mb-6"></div>
         <h2 className="text-center text-4xl font-extrabold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-2">
           Welcome Back
         </h2>
@@ -139,7 +144,7 @@ const LoginForm = () => {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full flex justify-center py-4 px-4 rounded-xl shadow-lg text-base font-semibold text-white !bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 hover:shadow-xl transition-all duration-300"
+                      className="group relative w-full flex justify-center py-4 px-4 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 hover:shadow-xl transition-all duration-300"
                     >
                       {isSubmitting ? (
                         <div className="flex items-center space-x-2">
@@ -174,7 +179,6 @@ const LoginForm = () => {
         </div>
       </div>
 
-      {/* Bottom Decoration */}
       <div className="mt-8 text-center">
         <div className="flex items-center justify-center space-x-4 text-xs text-gray-500">
           <span>© 2025 Developer Restaurant</span>
