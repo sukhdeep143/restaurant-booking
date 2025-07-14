@@ -2,11 +2,53 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
 
-// Get all orders
-router.get('/', async (req, res) => {
-  const orders = await Order.find().sort({ timestamp: -1 });
-  res.json(orders);
+// Create a new order
+router.post('/', async (req, res) => {
+  try {
+    const { userId, items, tableNumber, paymentMethod } = req.body;
+
+    // Calculate total amount
+    const totalAmount = items.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+
+    const newOrder = new Order({
+      userId,
+      items,
+      tableNumber,
+      paymentMethod,
+      totalAmount // ✅ explicitly set
+    });
+
+    const savedOrder = await newOrder.save();
+    res.status(201).json(savedOrder);
+  } catch (error) {
+    console.error('Error creating order:', error);
+    res.status(500).json({ message: 'Failed to create order' });
+  }
 });
+
+// Get all orders
+// Get all orders with optional status filter
+router.get('/', async (req, res) => {
+  try {
+    const { status } = req.query;
+    let query = {};
+
+    // Apply status filter only if it's not 'All Statuses' or undefined
+    if (status && status !== 'All Statuses') {
+      query.status = status;
+    }
+
+    const orders = await Order.find(query).sort({ createdAt: -1 });
+    res.json(orders);
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    res.status(500).json({ message: 'Failed to fetch orders' });
+  }
+});
+
 
 // Get single order
 router.get('/:id', async (req, res) => {
@@ -29,6 +71,17 @@ router.patch('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   await Order.findByIdAndDelete(req.params.id);
   res.json({ message: 'Order deleted successfully' });
+});
+// ✅ Get total revenue
+router.get('/stats/revenue', async (req, res) => {
+  try {
+    const orders = await Order.find();
+    const revenue = orders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
+    res.json({ revenue });
+  } catch (error) {
+    console.error('Error calculating revenue:', error);
+    res.status(500).json({ message: 'Failed to calculate revenue' });
+  }
 });
 
 module.exports = router;

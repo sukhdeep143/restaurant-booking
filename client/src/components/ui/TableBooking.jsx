@@ -116,6 +116,7 @@ const handleSubmitEditTable = async (e) => {
       </div>
 
       <div className="admin-section-content overflow-x-auto">
+        
         <table className="table-auto w-full border border-gray-300 text-sm">
           <thead className="bg-blue-600 text-white">
             <tr>

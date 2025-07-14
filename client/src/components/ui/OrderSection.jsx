@@ -9,13 +9,24 @@ const OrdersSection = () => {
   const [statusFilter, setStatusFilter] = useState('all');
 
   useEffect(() => {
-    fetchOrders();
-  }, []);
+  fetchOrders();
+}, [statusFilter, filter]);
 
-  const fetchOrders = async () => {
-    const response = await axios.get('http://localhost:5000/api/orders');
+
+const fetchOrders = async () => {
+  try {
+    const params = {};
+    if (statusFilter !== 'all') {
+      params.status = statusFilter;
+    }
+
+    const response = await axios.get('http://localhost:5000/api/orders', { params });
     setOrders(response.data);
-  };
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+  }
+};
+
 
   const updateStatus = async (id, status) => {
     await axios.patch(`http://localhost:5000/api/orders/${id}`, { status });
@@ -33,12 +44,21 @@ const OrdersSection = () => {
     invoice.print();
   };
 
-  const filterOrders = (order) => {
-    const today = new Date().toDateString();
-    const matchesDate = filter === 'today' ? new Date(order.timestamp).toDateString() === today : true;
-    const matchesStatus = statusFilter === 'all' ? true : order.status === statusFilter;
-    return matchesDate && matchesStatus;
-  };
+const filterOrders = (order) => {
+  const today = new Date().toLocaleDateString();
+  const orderDate = new Date(order.createdAt).toLocaleDateString();
+
+  const matchesDate = filter === 'today' ? orderDate === today : true;
+
+  const matchesStatus =
+    statusFilter === 'all'
+      ? true
+      : order.status?.toLowerCase() === statusFilter.toLowerCase();
+
+  return matchesDate && matchesStatus;
+};
+
+
 
   return (
     <div className="p-6 bg-gradient-to-br from-blue-100 to-purple-100 min-h-screen">
@@ -46,7 +66,10 @@ const OrdersSection = () => {
 
       <div className="flex gap-6 mb-6 flex-wrap items-center">
         <div className="bg-white p-4 rounded shadow w-48 border-l-4 border-purple-500 text-purple-700 font-medium">Total Orders: {orders.length}</div>
-        <div className="bg-white p-4 rounded shadow w-48 border-l-4 border-blue-500 text-blue-700 font-medium">Today's Orders: {orders.filter(o => new Date(o.timestamp).toDateString() === new Date().toDateString()).length}</div>
+        <div className="bg-white p-4 rounded shadow w-48 border-l-4 border-blue-500 text-blue-700 font-medium">Today's Orders: {orders.filter(o =>
+  new Date(o.createdAt).toLocaleDateString() === new Date().toLocaleDateString()
+).length
+}</div>
         <button
           onClick={() => setFilter(filter === 'today' ? 'all' : 'today')}
           className="bg-indigo-500 text-black px-4 py-2 rounded border border-indigo-700 hover:bg-indigo-600">
@@ -95,7 +118,7 @@ const OrdersSection = () => {
                     <option value="Cancelled">Cancelled</option>
                   </select>
                 </td>
-                <td className="px-4 py-2 font-semibold text-green-600">₹{order.total}</td>
+                <td className="px-4 py-2 font-semibold text-green-600">₹{order.totalAmount}</td>
                 <td className="px-4 py-2 flex gap-2 flex-wrap">
                   <button
                     onClick={() => setSelectedOrder(order)}
@@ -132,7 +155,7 @@ const OrdersSection = () => {
             <p><strong>User ID:</strong> {selectedOrder.userId}</p>
             <p><strong>Table Number:</strong> {selectedOrder.tableNumber}</p>
             <p><strong>Status:</strong> {selectedOrder.status}</p>
-            <p><strong>Total:</strong> ₹{selectedOrder.total}</p>
+            <p><strong>Total:</strong> ₹{selectedOrder.totalAmount}</p>
             <ul className="mt-4 space-y-1">
               {selectedOrder.items.map((item, i) => (
                 <li key={i}>
