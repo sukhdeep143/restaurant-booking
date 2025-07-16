@@ -85,7 +85,7 @@ function VerifyEmailPage() {
 
               <button
                 type="submit"
-                className="group relative w-full flex items-center justify-center px-4 py-3.5 text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl hover:from-indigo-500 hover:to-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 transform hover:scale-[1.02] shadow-md"
+                className="group relative w-full flex items-center justify-center px-4 py-3.5 text-white !bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl hover:from-indigo-500 hover:to-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 transform hover:scale-[1.02] shadow-md"
               >
                 <span className="absolute left-4">
                   <CheckCircle className="h-5 w-5 text-white/70 group-hover:text-white transition-colors duration-200" />

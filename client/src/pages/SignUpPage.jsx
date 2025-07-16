@@ -113,11 +113,24 @@ const SignupForm = () => {
                 </div>
               </SectionCard>
 
-              {/* === ROLES SECTION === */}
+              {/* === ROLES SECTION (Updated) === */}
               <SectionCard title="Roles" color="from-purple-50 to-pink-50" iconColor="from-purple-500 to-pink-500">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <InputField name="role" value={formData.role} onChange={handleChange} placeholder="Enter Your Role" />
-                  <InputField name="adminSecret" type="password" value={formData.adminSecret} onChange={handleChange} placeholder="Secret Key" />
+                  <SelectField
+                    name="role"
+                    value={formData.role}
+                    onChange={handleChange}
+                    options={["User", "Admin"]}
+                  />
+                  {formData.role === "Admin" && (
+                    <InputField
+                      name="adminSecret"
+                      type="password"
+                      value={formData.adminSecret}
+                      onChange={handleChange}
+                      placeholder="Secret Key"
+                    />
+                  )}
                 </div>
               </SectionCard>
 

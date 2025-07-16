@@ -1,0 +1,164 @@
+.admin-section {
+  padding: 1rem;
+  font-family: sans-serif;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.admin-header h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.admin-header button {
+  background-color: white;
+  color: #2563eb;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.admin-header button:hover {
+  background-color: #e0f2fe;
+}
+
+.admin-section-content {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  border: 1px solid #d1d5db;
+}
+
+thead {
+  background-color: #2563eb;
+  color: white;
+}
+
+th,
+td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+.status-available {
+  background-color: #d1fae5;
+  color: #065f46;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+}
+
+.status-occupied {
+  background-color: #fecaca;
+  color: #b91c1c;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+}
+
+.status-reserved {
+  background-color: #fef08a;
+  color: #92400e;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+button:hover {
+  text-decoration: underline;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+.modal-box {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  max-width: 28rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal-box h2 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+form .input-group {
+  margin-bottom: 1rem;
+}
+
+form label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+form input,
+form select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+}
+
+form .action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+button.cancel-btn {
+  background-color: #e5e7eb;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+}
+
+button.cancel-btn:hover {
+  background-color: #d1d5db;
+}
+
+button.save-btn {
+  background-color: #2563eb;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+}
+
+button.save-btn:hover {
+  background-color: #1d4ed8;
+}
