@@ -17,8 +17,8 @@ const SignupForm = () => {
     countryCode: '+91',
     phoneNumber: '',
     address: '',
-    role:'',
-    adminSecret:''
+    role: '',
+    adminSecret: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -36,6 +36,42 @@ const SignupForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    const {
+      email,
+      password,
+      confirmPassword,
+      firstName,
+      lastName,
+      phoneNumber,
+      address,
+      age,
+      gender,
+      role,
+      adminSecret,
+    } = formData;
+
+    // ✅ Validate required fields before sending
+    if (
+      !email || !password || !confirmPassword || !firstName || !lastName ||
+      !phoneNumber || !address || !age || !gender || !role
+    ) {
+      toast.error('Please fill all required fields.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error('Passwords do not match.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (role === 'Admin' && !adminSecret) {
+      toast.error('Admin secret key is required for admin role');
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const response = await axios.post(`${PORT}/api/auth/signup`, formData, {
         headers: { 'Content-Type': 'application/json' },
@@ -44,7 +80,7 @@ const SignupForm = () => {
       if (response.data.success) {
         toast.success('OTP sent to your email');
         navigate(`/verify-email?email=${encodeURIComponent(formData.email)}`);
-      }    
+      }
     } catch (error) {
       toast.error(error.response?.data?.message || 'Signup failed');
     } finally {
@@ -54,14 +90,13 @@ const SignupForm = () => {
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative">
-      {/* Animated Blurred Circles */}
+      {/* Background Decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-32 -right-32 w-64 h-64 bg-gradient-to-br from-indigo-200 to-purple-200 rounded-full opacity-20 animate-pulse"></div>
         <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-gradient-to-tr from-blue-200 to-cyan-200 rounded-full opacity-20 animate-pulse delay-1000"></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-r from-indigo-100 to-blue-100 rounded-full opacity-10 animate-spin slow-spin"></div>
       </div>
 
-      {/* Form Container */}
       <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-12 animate-fade-in">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-full mb-6 shadow-lg">
@@ -80,7 +115,7 @@ const SignupForm = () => {
         <div className="bg-white/80 backdrop-blur-sm shadow-2xl rounded-3xl overflow-hidden border border-white/20 animate-slide-up">
           <div className="p-6 sm:p-10">
             <form onSubmit={handleSubmit} className="space-y-10">
-              {/* === PROFILE SECTION === */}
+              {/* Profile Section */}
               <SectionCard title="Profile Information" color="from-indigo-50 to-blue-50" iconColor="from-indigo-500 to-blue-500">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {['firstName', 'middleName', 'lastName'].map((name, i) => (
@@ -93,7 +128,7 @@ const SignupForm = () => {
                 </div>
               </SectionCard>
 
-              {/* === CONTACT SECTION === */}
+              {/* Contact Section */}
               <SectionCard title="Contact Information" color="from-blue-50 to-cyan-50" iconColor="from-blue-500 to-cyan-500">
                 <div className="space-y-6">
                   <InputField name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Email Address" />
@@ -105,7 +140,7 @@ const SignupForm = () => {
                 </div>
               </SectionCard>
 
-              {/* === SECURITY SECTION === */}
+              {/* Security Section */}
               <SectionCard title="Security" color="from-purple-50 to-pink-50" iconColor="from-purple-500 to-pink-500">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <InputField name="password" type="password" value={formData.password} onChange={handleChange} placeholder="Password" />
@@ -113,7 +148,7 @@ const SignupForm = () => {
                 </div>
               </SectionCard>
 
-              {/* === ROLES SECTION (Updated) === */}
+              {/* Roles Section */}
               <SectionCard title="Roles" color="from-purple-50 to-pink-50" iconColor="from-purple-500 to-pink-500">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <SelectField
@@ -134,7 +169,7 @@ const SignupForm = () => {
                 </div>
               </SectionCard>
 
-              {/* === SUBMIT === */}
+              {/* Submit */}
               <div className="flex flex-col sm:flex-row items-center justify-between pt-8 space-y-4 sm:space-y-0">
                 <p className="text-sm text-gray-600 order-2 sm:order-1">
                   Already have an account?{' '}
@@ -145,7 +180,7 @@ const SignupForm = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="relative overflow-hidden px-10 py-4 text-lg font-semibold rounded-2xl text-white bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 focus:outline-none focus:ring-4 focus:ring-indigo-500/30 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl order-1 sm:order-2"
+                  className="relative overflow-hidden px-10 py-4 text-lg font-semibold rounded-2xl text-black bg-green-500 disabled:cursor-not-allowed transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl order-1 sm:order-2"
                 >
                   {isSubmitting ? 'Creating Account...' : 'Create Account'}
                 </button>
@@ -155,7 +190,7 @@ const SignupForm = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes fade-in {
           from { opacity: 0; transform: translateY(20px); }
           to { opacity: 1; transform: translateY(0); }
