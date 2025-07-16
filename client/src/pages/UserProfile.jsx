@@ -5,7 +5,7 @@ export default function UserProfile() {
   const user = {
     name: "Sukhdeep Singh",
     email: "sukhdeep@example.com",
-    phone: "+91 9876543210",
+    phone: "+91 755587-76687598-78557878",
   };
 
   return (
