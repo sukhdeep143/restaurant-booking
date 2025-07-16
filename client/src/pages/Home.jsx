@@ -6,7 +6,11 @@ export default function Home() {
   const reviews = [
     { id: 1, user: "Aarav", text: "Super easy to reserve a table online!" },
     { id: 2, user: "Riya", text: "Beautiful UI with clear booking steps." },
-    { id: 3, user: "Kabir", text: "Seamless experience and responsive design!" },
+    {
+      id: 3,
+      user: "Kabir",
+      text: "Seamless experience and responsive design!",
+    },
   ];
 
   return (
@@ -14,14 +18,15 @@ export default function Home() {
       {/* Hero Section with Overlay Text */}
       <div className="relative w-full">
         <img
-          src="/restaurant.jpg"
+          src="/Bg.jpeg"
           alt="Developer Restaurant"
           className="w-full h-72 sm:h-80 md:h-96 lg:h-[30rem] object-cover brightness-75"
         />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-          <h1 className="text-4xl sm:text-5xl font-bold text-white drop-shadow-lg">
+        <div className="absolute inset-0 flex  flex-col items-center justify-center text-center px-4">
+          <h1 className="text-4xl sm:text-5xl p-5 font-bold text-amber-700 drop-shadow-lg rounded-2xl  bg-slate-200/50">
             Welcome to Developer Restaurant
           </h1>
+
           <p className="mt-3 max-w-xl text-white text-lg sm:text-xl drop-shadow">
             Effortless online table reservations with a modern experience.
           </p>
@@ -72,7 +77,9 @@ export default function Home() {
 
       {/* Reviews Section */}
       <section className="bg-gray-100 dark:bg-gray-800 py-12 px-6">
-        <h2 className="text-3xl font-bold mb-8 text-center">What Our Diners Say</h2>
+        <h2 className="text-3xl font-bold mb-8 text-center">
+          What Our Diners Say
+        </h2>
         <div className="max-w-3xl mx-auto space-y-6">
           {reviews.map((review) => (
             <div
@@ -94,7 +101,8 @@ export default function Home() {
       <section className="bg-blue-600 dark:bg-blue-700 text-white text-center py-12 px-6">
         <h2 className="text-3xl font-bold mb-4">Ready to Book Your Table?</h2>
         <p className="mb-6 max-w-2xl mx-auto">
-          Join us for an unforgettable dining experience. Reserve your table now!
+          Join us for an unforgettable dining experience. Reserve your table
+          now!
         </p>
         <Link
           to="/booking"
