@@ -28,7 +28,7 @@ export default function Home() {
           <div className="mt-6 flex gap-4">
             <Link
               to="/login"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow"
+              className="!bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow"
             >
               Login
             </Link>

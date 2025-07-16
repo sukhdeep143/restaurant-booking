@@ -47,40 +47,51 @@ const [stats, setStats] = useState({
 });
 
 useEffect(() => {
-  const fetchStats = async () => {
-    try {
-      const res = await axios.get("http://localhost:5000/api/menu/stats/dashboard");
-      setStats(res.data); // setStats should be your state hook
-    } catch (err) {
-      console.error("Error fetching dashboard stats:", err);
-    }
-  };
+  const cachedStats = localStorage.getItem("dashboardStats");
 
-  fetchStats();
+  if (cachedStats) {
+    setStats(JSON.parse(cachedStats));
+  } else {
+    fetchStats();
+  }
 
-
-
-  
   const interval = setInterval(fetchStats, 60000);
   return () => clearInterval(interval);
 }, []);
 
+const fetchStats = async () => {
+  try {
+    const res = await axios.get("http://localhost:5000/api/menu/stats/dashboard");
+    setStats(res.data);
+    localStorage.setItem("dashboardStats", JSON.stringify(res.data)); // Save to localStorage
+  } catch (err) {
+    console.error("Error fetching dashboard stats:", err);
+  }
+};
+
 
 //dynamic orders
   const [orders, setOrders] = useState([]);
+useEffect(() => {
+  const cachedOrders = localStorage.getItem("orders");
 
-  useEffect(() => {
+  if (cachedOrders) {
+    setOrders(JSON.parse(cachedOrders));
+  } else {
     fetchOrders();
-  }, []);
+  }
+}, []);
 
-  const fetchOrders = async () => {
-    try {
-      const res = await axios.get("http://localhost:5000/api/orders");
-      setOrders(res.data);
-    } catch (err) {
-      console.error("Error fetching orders:", err);
-    }
-  };
+const fetchOrders = async () => {
+  try {
+    const res = await axios.get("http://localhost:5000/api/orders");
+    setOrders(res.data);
+    localStorage.setItem("orders", JSON.stringify(res.data));
+  } catch (err) {
+    console.error("Error fetching orders:", err);
+  }
+};
+
 
   //dynamic booking
   const [tableSummary, setTableSummary] = useState({
