@@ -22,9 +22,9 @@ const LoginForm = () => {
 
         // Navigate based on role
         if (response.data.role.toLowerCase() === "admin") {
-          navigate("/admin/dashboard");
+          navigate("/DashboardCard");
         } else {
-          navigate("/userpanel/profile");
+          navigate("/UserProfile");
         }
       } else {
         toast.error("Invalid credentials or missing role");

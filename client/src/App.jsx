@@ -12,7 +12,7 @@ import VerifyEmailPage from './pages/VerifyEmail';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import UserProfile from './pages/UserProfile';
-import AdminDashboard from './pages/Admin-panel';
+import DashboardCard from './pages/Admin-panel';
 
 function App() {
   return (
@@ -27,11 +27,11 @@ function App() {
           <Route path="/verify-email" element={<VerifyEmailPage />} />
 
           <Route element={<ProtectRoute requiredRole="admin" />}>
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/DashboardCard" element={<DashboardCard />} />
           </Route>
 
           <Route element={<ProtectRoute requiredRole="user" />}>
-            <Route path="/userpanel/profile" element={<UserProfile />} />
+            <Route path="/UserProfile" element={<UserProfile />} />
           </Route>
         </Routes>
         <Footer />
