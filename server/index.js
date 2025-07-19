@@ -43,6 +43,33 @@ app.get("/", (req, res) => {
   res.send("Restaurant Booking API is running");
 });
 
-app.listen(PORT, () => {
+const http = require('http');
+const { Server } = require('socket.io');
+
+const server = http.createServer(app);
+
+// Set up Socket.IO
+const io = new Server(server, {
+  cors: {
+    origin: '*', // replace * with frontend origin if needed
+    methods: ['GET', 'POST']
+  }
+});
+
+// Store io instance globally (optional but handy)
+global.io = io;
+
+// On client connection
+io.on('connection', (socket) => {
+  console.log('Admin connected: ' + socket.id);
+
+  socket.on('disconnect', () => {
+    console.log('Admin disconnected: ' + socket.id);
+  });
+});
+
+// Start the server
+server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+

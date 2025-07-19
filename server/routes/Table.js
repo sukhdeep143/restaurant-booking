@@ -33,13 +33,37 @@ router.post("/", async (req, res) => {
 });
 
 // 🟡 Update booking status or time
+// router.patch('/by-number/:tableNumber', async (req, res) => {
+//   const { tableNumber } = req.params;
+//   const updates = req.body;
+
+//   try {
+//     const updated = await TableBooking.findOneAndUpdate(
+//       { tableNumber: Number(tableNumber) },  // ✅ must be a number
+//       updates,
+//       { new: true }
+//     );
+
+//     if (!updated) {
+//       return res.status(404).json({ message: "Table not found" });
+//     }
+
+//     res.json(updated);
+//   } catch (err) {
+//     console.error("Error in PATCH /by-number:", err);
+//     res.status(500).json({ message: err.message });
+//   }
+// });
+
+
+// 🟡 Update booking status or time
 router.patch('/by-number/:tableNumber', async (req, res) => {
   const { tableNumber } = req.params;
   const updates = req.body;
 
   try {
     const updated = await TableBooking.findOneAndUpdate(
-      { tableNumber: Number(tableNumber) },  // ✅ must be a number
+      { tableNumber: Number(tableNumber) },
       updates,
       { new: true }
     );
@@ -48,14 +72,18 @@ router.patch('/by-number/:tableNumber', async (req, res) => {
       return res.status(404).json({ message: "Table not found" });
     }
 
+    // ✅ Emit real-time update to all clients
+    if (global.io) {
+      global.io.emit("tableBooked", updated); // same event name!
+      console.log("📢 Emitted tableBooked from PATCH");
+    }
+
     res.json(updated);
   } catch (err) {
     console.error("Error in PATCH /by-number:", err);
     res.status(500).json({ message: err.message });
   }
 });
-
-
 
 // 🔴 Delete a booking
 router.delete('/by-number/:tableNumber', async (req, res) => {

@@ -177,7 +177,7 @@ export default function Dashboard({
     <div className="!bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg">
       {/* Welcome Message */}
       <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-800 dark:text-white">
-        👋 Welcome back, Kashvi!
+        👋 Welcome back!
       </h2>
       <p className="text-gray-600 dark:text-gray-300 mb-6">
         Here's a quick overview of your booking activity.

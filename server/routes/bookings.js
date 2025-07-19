@@ -1,29 +1,83 @@
 const express = require("express");
 const router = express.Router();
 const Booking = require("../models/booking");
-const User = require("../models/UserModel"); // adjust the path as needed
+const User = require("../models/UserModel");
+const Table = require("../models/Tables"); // ✅ moved to top
 
+// ✅ Create a new booking and update table status
 router.post("/", async (req, res) => {
   try {
     const storedUser = req.body.userId;
 
     const newBooking = new Booking({
       ...req.body,
-      userId: storedUser, // 🔥 this is important!
+      userId: storedUser,
       reference: `RSV${Math.floor(100000 + Math.random() * 900000)}`
     });
 
     const savedBooking = await newBooking.save();
+
+    // ✅ Update table status to "occupied"
+    const updatedTable = await Table.findOneAndUpdate(
+      { tableNumber: req.body.tableNumber },
+      {
+        status: "occupied",
+        bookingTime: new Date(`${req.body.date}T${req.body.time}`)
+      },
+      { new: true }
+    );
+
+    // ✅ Emit tableBooked with updated table data
+    if (global.io) {
+global.io.emit("tableBooked", {
+  status: "occupied",
+  tableNumber: req.body.tableNumber
+});
+    }
+
     res.status(201).json(savedBooking);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Failed to book table" });
+  } catch (err) {
+    console.error("❌ Booking error:", err);
+    res.status(500).json({ error: "Failed to create booking" });
   }
 });
 
+// ✅ Cancel a booking and free the table
+router.patch("/:id/cancel", async (req, res) => {
+  try {
+    const updated = await Booking.findByIdAndUpdate(
+      req.params.id,
+      { status: "cancelled" },
+      { new: true }
+    );
 
+    const booking = await Booking.findById(req.params.id);
 
-// in routes/booking.js
+    if (booking) {
+      await Table.findOneAndUpdate(
+        { tableNumber: booking.tableNumber },
+        { status: "available", bookingTime: null },
+        { new: true }
+      );
+
+      const updatedTable = await Table.findOne({ tableNumber: booking.tableNumber });
+
+      // ✅ Emit tableBooked with updated table data
+      if (global.io) {
+      global.io.emit("tableBooked", {
+  status: "available",
+  tableNumber: booking.tableNumber
+});
+      }
+    }
+
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ message: "Cancel failed", error: err.message });
+  }
+});
+
+// ✅ Get all bookings for a user
 router.get('/user/:userId', async (req, res) => {
   try {
     const bookings = await Booking.find({ userId: req.params.userId }).sort({ createdAt: -1 });
@@ -35,27 +89,23 @@ router.get('/user/:userId', async (req, res) => {
 });
 
 
-// PATCH /api/bookings/:id/cancel
-router.patch("/:id/cancel", async (req, res) => {
+// GET all bookings
+router.get("/", async (req, res) => {
   try {
-    const updated = await Booking.findByIdAndUpdate(
-      req.params.id,
-      { status: "cancelled" },
-      { new: true }
-    );
-    res.json(updated);
+    const bookings = await Booking.find().sort({ createdAt: -1 });
+    res.status(200).json(bookings);
   } catch (err) {
-    res.status(500).json({ message: "Cancel failed", error: err.message });
+    res.status(500).json({ message: "Failed to fetch bookings", error: err.message });
   }
 });
 
-// GET /api/bookings/future?userId=123
+
+
+
+// ✅ Future bookings
 router.get("/future", async (req, res) => {
   const { userId } = req.query;
-
-  if (!userId) {
-    return res.status(400).json({ message: "Missing userId" });
-  }
+  if (!userId) return res.status(400).json({ message: "Missing userId" });
 
   try {
     const bookings = await Booking.find({
@@ -69,13 +119,10 @@ router.get("/future", async (req, res) => {
   }
 });
 
-// GET /api/bookings/past?userId=123
+// ✅ Past bookings
 router.get("/past", async (req, res) => {
   const { userId } = req.query;
-
-  if (!userId) {
-    return res.status(400).json({ message: "Missing userId" });
-  }
+  if (!userId) return res.status(400).json({ message: "Missing userId" });
 
   try {
     const bookings = await Booking.find({
@@ -88,25 +135,21 @@ router.get("/past", async (req, res) => {
     res.status(500).json({ message: "Failed to fetch past bookings", error: err.message });
   }
 });
-// GET /api/bookings/filter?userId=...&type=past|future|all&status=confirmed|cancelled|pending
+
+// ✅ Filter bookings based on type and status
 router.get("/filter", async (req, res) => {
   const { userId, type = "all", status } = req.query;
-
-  if (!userId) {
-    return res.status(400).json({ message: "Missing userId" });
-  }
+  if (!userId) return res.status(400).json({ message: "Missing userId" });
 
   const today = new Date();
   let filter = { userId };
 
-  // Filter based on type
   if (type === "past") {
     filter.date = { $lt: today };
   } else if (type === "future") {
     filter.date = { $gte: today };
   }
 
-  // Optional status filter
   if (status) {
     filter.status = status;
   }
@@ -119,7 +162,7 @@ router.get("/filter", async (req, res) => {
   }
 });
 
-// TEMPORARY: Get all bookings with userId
+// ✅ User dashboard data
 router.get("/dashboard/:userId", async (req, res) => {
   const userId = req.params.userId;
 
@@ -145,24 +188,17 @@ router.get("/dashboard/:userId", async (req, res) => {
     const recent = allBookings.slice(0, 5);
     const total = allBookings.length;
 
-    // const pastConfirmed = allBookings
-    //   .filter((b) => b.date < now && b.status === "confirmed")
-    //   .sort((a, b) => new Date(b.date) - new Date(a.date));
+    const pastConfirmedBookings = allBookings
+      .filter(
+        (b) =>
+          b.status === "confirmed" &&
+          new Date(b.date).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0)
+      )
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    // const lastVisit = pastConfirmed[0]?.date;
-// Get all confirmed *past* bookings
-const pastConfirmedBookings = allBookings
-  .filter(
-    (b) =>
-      b.status === "confirmed" &&
-      new Date(b.date).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0)
-  )
-  .sort((a, b) => new Date(b.date) - new Date(a.date)); // Descending order
-
-const lastVisit = pastConfirmedBookings.length > 0
-  ? new Date(pastConfirmedBookings[0].date).toDateString()
-  : null;
-
+    const lastVisit = pastConfirmedBookings.length > 0
+      ? new Date(pastConfirmedBookings[0].date).toDateString()
+      : null;
 
     res.json({
       upcomingBooking: upcoming
@@ -174,21 +210,16 @@ const lastVisit = pastConfirmedBookings.length > 0
         status: b.status,
       })),
       totalBookings: total,
-     lastVisit: user.lastLogin
-  ? new Date(user.lastLogin).toLocaleString()
-  : "No login history",
-
+      lastVisit: user.lastLogin
+        ? new Date(user.lastLogin).toLocaleString()
+        : "No login history",
       profileStatus: profileComplete ? "Complete" : "Incomplete",
     });
     console.log("Last visit:", lastVisit);
-
   } catch (err) {
     console.error("Dashboard stats error:", err);
-    res
-      .status(500)
-      .json({ message: "Failed to fetch dashboard data", error: err.message });
+    res.status(500).json({ message: "Failed to fetch dashboard data", error: err.message });
   }
 });
-
 
 module.exports = router;
