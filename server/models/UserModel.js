@@ -71,6 +71,11 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now, // Automatically set creation date
   },
+  lastLogin: {
+  type: Date,
+  default: null,
+},
+
   updatedAt: {
     type: Date,
     default: Date.now, // Automatically set update date

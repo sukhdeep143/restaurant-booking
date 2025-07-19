@@ -15,8 +15,13 @@ const LoginForm = () => {
       const response = await axios.post(`${PORT}/api/auth/login`, values);
 
       if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("userId", response.data.userId);
+       localStorage.setItem('user', JSON.stringify({
+  userId: response.data.userId,
+  token: response.data.token,
+  role: response.data.role
+}));
+
+
         toast.success("Login successful");
         navigate("/profile");
       }

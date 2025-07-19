@@ -9,6 +9,12 @@ const registeredUserRoutes = require('./routes/RegisteredUserRoutes');
 // const categoryRoutes = require("./routes/category");
 const ordersRoute = require('./routes/orders');
 const revenueRoutes = require('./routes/revenue');
+const bookingRoute = require("./routes/bookings");
+const profileRoutes = require('./routes/profileRoutes');
+
+
+const userRoutes = require('./routes/userRoutes');
+
 
 
 const app = express();
@@ -26,6 +32,11 @@ app.use('/api/orders', ordersRoute);
 app.use('/api/registered-users', registeredUserRoutes);
 app.use("/api/tables", tableRoutes);
 app.use('/api/menu', menuRoutes);
+app.use("/api/bookings", bookingRoute);
+app.use('/api/profile', profileRoutes);
+app.use('/api/user', userRoutes);
+
+
 // app.use("/api/category", categoryRoutes);
 // Routes
 app.get("/", (req, res) => {

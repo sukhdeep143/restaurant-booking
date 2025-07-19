@@ -161,6 +161,12 @@ const login = async (req, res) => {
     if (!isPasswordMatch) {
       return res.status(400).json({ message: 'Invalid email or password.' });
     }
+
+    
+    // ✅ Update lastLogin here
+  await User.findByIdAndUpdate(user._id, { lastLogin: new Date() });
+
+
 // After password and email verification checks
 const exists = await RegisteredUser.findOne({ email: user.email });
 if (!exists) {

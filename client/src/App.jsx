@@ -9,31 +9,30 @@ import Home from "./pages/Home";
 import VerifyEmailPage from "./pages/VerifyEmail";
 import Footer from "./components/Footer";
 import Header from "./components/Header ";
-import UserProfile from './components/UserProfile';
+import UserProfile from "./components/UserProfile";
 import AdminPanel from "./pages/admin-panel";
+import UserPanel from "./pages/UserPanel";
 
-
-const token = localStorage.getItem('token');
+const token = localStorage.getItem("token");
 // console.log(token);
 
-const userId = localStorage.getItem('userId');
+const userId = localStorage.getItem("userId");
 // console.log(userId);
-
 
 function App() {
   return (
     <BrowserRouter>
       <Header />
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="/profile" element={<UserProfile />} />
-<Route path="/admin-panel" element={<AdminPanel />} />
-        
-        
+        <Route path="/admin-panel" element={<AdminPanel />} />
+        <Route path="/User/*" element={<UserPanel />} />
       </Routes>
       <Footer />
     </BrowserRouter>
@@ -41,8 +40,6 @@ function App() {
 }
 
 export default App;
-
-
 
 // import { Routes, Route, Router } from 'react-router-dom';
 
@@ -55,12 +52,10 @@ export default App;
 // // import AdminDashboard from './pages/AdminDashboard';
 // // import UserProfile from './pages/UserProfile';
 
-
 // function App() {
 //   return (
 
 //     <AuthProvider>
-
 
 //     <Router>
 //         <Routes>
