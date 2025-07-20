@@ -5,7 +5,7 @@ const Order = require('../models/Order');
 // Create a new order
 router.post('/', async (req, res) => {
   try {
-    const { userId, items, tableNumber, paymentMethod } = req.body;
+    const { userId,phone, items, tableNumber, paymentMethod } = req.body;
 
     // Calculate total amount
     const totalAmount = items.reduce(
@@ -15,6 +15,7 @@ router.post('/', async (req, res) => {
 
     const newOrder = new Order({
       userId,
+      phone,
       items,
       tableNumber,
       paymentMethod,
@@ -41,7 +42,10 @@ router.get('/', async (req, res) => {
       query.status = status;
     }
 
-    const orders = await Order.find(query).sort({ createdAt: -1 });
+    const orders = await Order.find(query)
+  .populate('userId', 'phone') // 👈 populate only the phone field from user
+  .sort({ createdAt: -1 });
+
     res.json(orders);
   } catch (error) {
     console.error('Error fetching orders:', error);
@@ -83,5 +87,19 @@ router.get('/stats/revenue', async (req, res) => {
     res.status(500).json({ message: 'Failed to calculate revenue' });
   }
 });
+
+router.get('/debug/created', async (req, res) => {
+  const orders = await Order.find({ status: 'Completed' })
+    .sort({ createdAt: -1 })
+    .limit(5);
+
+  res.json(orders.map(o => ({
+    _id: o._id,
+    createdAt: o.createdAt,
+    status: o.status,
+    totalAmount: o.totalAmount
+  })));
+});
+
 
 module.exports = router;

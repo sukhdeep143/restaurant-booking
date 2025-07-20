@@ -1,18 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
-
+const now = new Date();
 router.get('/', async (req, res) => {
   try {
     const { month, year } = req.query;
 
-    const selectedMonth = parseInt(month); // 1-based
-    const selectedYear = parseInt(year);
+const selectedMonth = parseInt(month) || now.getMonth() + 1; // default: current month
+const selectedYear = parseInt(year) || now.getFullYear();  
 
     
 // India Standard Time (UTC+5:30)
 // ✅ Get IST current date
-const now = new Date();
+
 const istOffset = 5.5 * 60 * 60 * 1000; // IST offset in milliseconds
 const istNow = new Date(now.getTime() + istOffset);
 

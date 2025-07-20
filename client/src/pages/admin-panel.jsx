@@ -11,6 +11,7 @@ import RegisteredUserList from "../components/ui/userTable";
 import OrdersSection from "../components/ui/OrderSection";
 import Revenue from "../components/ui/Revenue";
 
+
 const DashboardCard = ({ title, value, color, onView }) => (
   <Card className={`dashboard-card ${color}`}>
     <CardContent className="dashboard-card-content">
@@ -101,9 +102,16 @@ const fetchOrders = async () => {
   });
 
   useEffect(() => {
+  fetchOrders();
+  fetchTableSummary(); // Initial fetch
+
+  const interval = setInterval(() => {
     fetchOrders();
-    fetchTableSummary(); // Call this on mount
-  }, []);
+    fetchTableSummary();
+  }, 2000); // 🔁 refresh every 2000 ms = 2 seconds
+
+  return () => clearInterval(interval); // Cleanup on unmount
+}, []);
 
   const fetchTableSummary = async () => {
     try {
@@ -145,16 +153,20 @@ const fetchOrders = async () => {
   });
 
   //dynamic revenue
-  const calcRevenue = (orderList) =>
-    orderList.reduce(
-      (acc, order) => {
-        if (order.paymentStatus === "Paid") acc.received += order.totalAmount;
-        else acc.pending += order.totalAmount;
-        acc.total += order.totalAmount;
-        return acc;
-      },
-      { received: 0, pending: 0, total: 0 }
-    );
+const calcRevenue = (orderList) =>
+  orderList.reduce(
+    (acc, order) => {
+      if (order.status === "Completed") {
+        acc.received += order.totalAmount;
+        acc.total += order.totalAmount;  // ✅ Only count this in total
+      } else {
+        acc.pending += order.totalAmount;
+      }
+      return acc;
+    },
+    { received: 0, pending: 0, total: 0 }
+  );
+
 
   const todayRevenue = calcRevenue(todayOrders);
   const monthRevenue = calcRevenue(monthOrders);
@@ -375,6 +387,15 @@ const fetchOrders = async () => {
           >
             Registered Users
           </button>
+<button
+  onClick={() => {
+    localStorage.removeItem("user");
+    window.location.href = "/admin/login"; // or navigate("/admin/login") if using react-router
+  }}
+  className="nav-button text-red-600 hover:text-red-800"
+>
+  Logout
+</button>
 
           <div className="sidebar-section-title">MANAGEMENT</div>
 

@@ -22,6 +22,8 @@ const Revenue = () => {
     try {
       const res = await fetch(`/api/revenue?month=${month}&year=${year}`);
       const data = await res.json();
+      console.log("📊 Revenue data from backend:", data);
+
       setTotalRevenue(data.totalRevenue || 0);
       setTodaysRevenue(data.todaysRevenue || 0);
       setTodaysCODRevenue(data.todaysCODRevenue || 0);
