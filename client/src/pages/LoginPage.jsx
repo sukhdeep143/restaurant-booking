@@ -22,7 +22,7 @@ const LoginForm = () => {
 
         // Navigate based on role
         if (response.data.role.toLowerCase() === "admin") {
-          navigate("/DashboardCard");
+          navigate("/AdminPanel");
         } else {
           navigate("/UserProfile");
         }

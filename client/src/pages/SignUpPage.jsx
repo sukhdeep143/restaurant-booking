@@ -155,9 +155,9 @@ const SignupForm = () => {
                     name="role"
                     value={formData.role}
                     onChange={handleChange}
-                    options={["User", "Admin"]}
+                    options={["user", "admin"]}
                   />
-                  {formData.role === "Admin" && (
+                  {formData.role === "admin" && (
                     <InputField
                       name="adminSecret"
                       type="password"

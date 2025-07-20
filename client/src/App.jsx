@@ -11,8 +11,8 @@ import VerifyEmailPage from './pages/VerifyEmail';
 
 import Footer from './components/Footer';
 import Header from './components/Header';
-import UserProfile from './pages/UserProfile';
-import DashboardCard from './pages/Admin-panel';
+import UserProfile from './components/UserProfile';
+import AdminPanel from './pages/Admin-panel';
 
 function App() {
   return (
@@ -25,9 +25,10 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />
+          <Route path="/verify-email" element={<VerifyEmailPage />} />
 
           <Route element={<ProtectRoute requiredRole="admin" />}>
-            <Route path="/DashboardCard" element={<DashboardCard />} />
+            <Route path="/AdminPanel" element={<AdminPanel />} />
           </Route>
 
           <Route element={<ProtectRoute requiredRole="user" />}>

@@ -20,6 +20,11 @@ const ProtectRoute = ({ requiredRole }) => {
     return <Navigate to="/login" replace />;
   }
 
+  console.log(authState.user.role )
+  console.log(authState.user.role )
+  console.log(authState.user.role )
+  console.log(authState.user.role )
+
   if (requiredRole && authState.user.role !== requiredRole) {
     return <Navigate to="/" replace />;
   }
