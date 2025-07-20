@@ -10,27 +10,27 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const PORT = import.meta.env.VITE_APP_API_URL;
 
-  const handleLogin = async (values, { setSubmitting }) => {
-    try {
-      const response = await axios.post(`${PORT}/api/auth/login`, values);
+const handleLogin = async (values, { setSubmitting }) => {
+  try {
+    const response = await axios.post(`${PORT}/api/auth/login`, values);
 
-      if (response.data.token) {
-       localStorage.setItem('user', JSON.stringify({
-  userId: response.data.userId,
-  token: response.data.token,
-  role: response.data.role
-}));
+    if (response.data.token) {
+      // Store each item separately to avoid stale data
+      localStorage.setItem("userId", response.data.userId);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("role", response.data.role);
 
-
-        toast.success("Login successful");
-        navigate("/profile");
-      }
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Login failed");
-    } finally {
-      setSubmitting(false);
+      toast.success("Login successful");
+      navigate("/user");
     }
-  };
+  } catch (error) {
+    toast.error(error.response?.data?.message || "Login failed");
+  } finally {
+    setSubmitting(false);
+  }
+};
+
+
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative">
