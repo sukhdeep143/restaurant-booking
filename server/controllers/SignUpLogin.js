@@ -119,6 +119,10 @@ if (!exists) {
       text: `Your verification code is: ${verificationCode}. Please enter this code to verify your email.`,
     };
     await transporter.sendMail(mailOptions);
+    
+   console.log("Received adminSecret:", adminSecret);
+  console.log("Expected adminSecret:", process.env.ADMIN_SECRET_KEY);
+  console.log("Valid Admin?", isValidAdminSecret);
 
     res.status(201).json({
       success: true,

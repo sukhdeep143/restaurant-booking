@@ -390,7 +390,7 @@ const calcRevenue = (orderList) =>
 <button
   onClick={() => {
     localStorage.removeItem("user");
-    window.location.href = "/admin/login"; // or navigate("/admin/login") if using react-router
+    window.location.href = "/home"; // or navigate("/admin/login") if using react-router
   }}
   className="nav-button text-red-600 hover:text-red-800"
 >
