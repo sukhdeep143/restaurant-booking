@@ -4,7 +4,7 @@ const {signup, login, changePassword, verifyEmail} = require('../controllers/Sig
 const {forgotPassword,verifyOTP,resetPassword,resendOTP} = require('../controllers/authController')
 
 router.post('/signup', signup); 
-// router.post('/login', login); 
+router.post('/login', login); 
 router.post('/verify-email', verifyEmail); 
 router.post('/login', login);
 router.post('/changepassword', changePassword);

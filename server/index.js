@@ -1,8 +1,14 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const dbConnect = require("./config/database");
 const auth = require('./routes/auth')
-require("dotenv").config();
+const tableRoutes = require("./routes/Table");
+const menuRoutes = require('./routes/menu');
+const registeredUserRoutes = require('./routes/RegisteredUserRoutes');
+const categoryRoutes = require("./routes/category");
+const ordersRoute = require('./routes/orders');
+
 
 
 const app = express();
@@ -11,10 +17,14 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
 
-dbConnect()
+dbConnect();
 
 app.use('/api/auth',auth)
-
+app.use('/api/orders', ordersRoute);
+app.use('/api/registered-users', registeredUserRoutes);
+app.use("/api/tables", tableRoutes);
+app.use('/api/menu', menuRoutes);
+app.use("/api/category", categoryRoutes);
 // Routes
 app.get("/", (req, res) => {
   res.send("Restaurant Booking API is running");
